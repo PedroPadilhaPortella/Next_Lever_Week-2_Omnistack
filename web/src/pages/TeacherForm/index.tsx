@@ -2,6 +2,7 @@ import React from 'react';
 import PageHeader from '../../components/PageHeader';
 import Input from '../../components/Input';
 import warningIcon from '../../assets/images/icons/warning.svg';
+import Textarea from '../../components/Textarea';
 import './styles.css';
 
 function TeacherForm() {
@@ -24,6 +25,7 @@ function TeacherForm() {
                     <legend>Sobre a Aula</legend>
                     <Input name='subjetc' label='Matéria'/>
                     <Input name='cost' label='Custo da sua Hora por Aula'/>
+                    <Textarea name='bio' label='Biografia'/>
                 </fieldset>
 
                 <footer>
