@@ -1,9 +1,11 @@
 import React, { useState, FormEvent } from "react";
-import "./styles.css";
+
 import PageHeader from "../../components/PageHeader/";
 import TeacherItem, { Teacher } from "../../components/TeacherItem";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
+
+import "./styles.css";
 import api from "../../serveless/api";
 
 
@@ -17,7 +19,7 @@ function TeacherList() {
     async function searchTeachers(e: FormEvent) {
         e.preventDefault();
         const response = await api.get('classes', {
-            params: {subject, week_day, time}
+            params: { subject, week_day, time }
         });
 
         setTeachers(response.data)
@@ -31,7 +33,7 @@ function TeacherList() {
                         name='subject'
                         label='Matéria'
                         value={subject}
-                        onChange={(e) => { setSubject(e.target.value)}}
+                        onChange={(e) => { setSubject(e.target.value) }}
                         options={[
                             { value: 'Artes', label: 'Artes' },
                             { value: 'Biologia', label: 'Biologia' },
@@ -54,7 +56,7 @@ function TeacherList() {
                         name='week_day'
                         label='Dia da Semana'
                         value={week_day}
-                        onChange={(e) => { setWeekDay(e.target.value)}}
+                        onChange={(e) => { setWeekDay(e.target.value) }}
                         options={[
                             { value: '0', label: 'Domingo' },
                             { value: '1', label: 'Segunda-feira' },
@@ -67,7 +69,7 @@ function TeacherList() {
                     />
 
                     <Input type="time" name='time' label='Hora' value={time}
-                    onChange={(e) => { setTime(e.target.value)}} />
+                        onChange={(e) => { setTime(e.target.value) }} />
 
                     <button type="submit">Buscar</button>
 
@@ -76,7 +78,7 @@ function TeacherList() {
 
             <main>
                 {teachers.map((teacher: Teacher) => {
-                    return <TeacherItem key={teacher.id} teacher={teacher}/>
+                    return <TeacherItem key={teacher.id} teacher={teacher} />
                 })}
             </main>
         </div>

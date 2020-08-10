@@ -1,4 +1,5 @@
 import express from 'express';
+
 import ClassesController from './controllers/ClassesController';
 import ConnectionsController from './controllers/ConnectionsController';
 

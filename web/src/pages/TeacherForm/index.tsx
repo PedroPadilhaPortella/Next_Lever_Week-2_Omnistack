@@ -1,11 +1,13 @@
 import React, { useState, FormEvent } from "react";
 import { useHistory } from 'react-router-dom';
-import "./styles.css";
+
 import PageHeader from "../../components/PageHeader/";
 import Input from "../../components/Input/";
 import Textarea from "../../components/Textarea/";
 import Select from "../../components/Select/";
 import warningIcon from "../../assets/images/icons/warning.svg";
+
+import "./styles.css";
 import api from "../../serveless/api";
 
 
@@ -101,7 +103,7 @@ export default function TeacherForm() {
                 { value: 'Português', label: 'Português' },
                 { value: 'Inglês', label: 'Inglês' },
                 { value: 'Espanhol', label: 'Espanhol' },
-            ]}
+              ]}
             />
             <Input name="cost" label="Custo da sua hora por aula" value={cost}
               onChange={(e) => { setCost(e.target.value) }} />

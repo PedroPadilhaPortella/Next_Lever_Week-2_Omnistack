@@ -17,7 +17,7 @@ function Landing() {
 
     useEffect(() => {
         api.get('connections').then(response => {
-            const {total} = response.data;
+            const { total } = response.data;
             setTotalConnections(total);
         })
     }, [])
@@ -26,24 +26,24 @@ function Landing() {
         <div id="page-landing">
             <div id="page-landing-content" className="container">
                 <div className="logo-container">
-                    <img src={logoImg} alt="Proffy"/>
+                    <img src={logoImg} alt="Proffy" />
                     <h2>Sua Plataforma de Estudos Online</h2>
                 </div>
-                <img src={landingImg} alt="Plataforma de Estudos" className="hero-image"/>
+                <img src={landingImg} alt="Plataforma de Estudos" className="hero-image" />
 
                 <div className="buttons-container">
                     <Link to="/study" className="study">
-                        <img src={studyIcon} alt="estudar"/>
+                        <img src={studyIcon} alt="estudar" />
                         Estudar
                     </Link>
                     <Link to="/give-classes" className="give-classes">
-                        <img src={giveClassesIcon} alt="dar aulas"/>
+                        <img src={giveClassesIcon} alt="dar aulas" />
                         Dar Aulas
                     </Link>
                 </div>
 
                 <span className="total-connections">
-                    Total de {totalConnections} conexões já realizadas <img src={purpleHeartIcon} alt="Coração roxo"/>
+                    Total de {totalConnections} conexões já realizadas <img src={purpleHeartIcon} alt="Coração roxo" />
                 </span>
             </div>
         </div>

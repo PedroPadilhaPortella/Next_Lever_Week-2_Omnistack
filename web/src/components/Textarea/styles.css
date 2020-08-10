@@ -1,9 +1,8 @@
-
 .textarea-block {
     position: relative;
 }
 
-.textarea-block + .textarea-block {
+.textarea-block+.textarea-block {
     margin-top: 1.4rem;
 }
 

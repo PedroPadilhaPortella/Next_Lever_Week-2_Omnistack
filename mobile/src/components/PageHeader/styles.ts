@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     padding: 40,
     backgroundColor: '#8257e5'
   },
-  
+
   topBar: {
     flexDirection: 'row',
     alignItems: 'center',
