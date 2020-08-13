@@ -2,20 +2,57 @@ import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import { ScrollView, TextInput, BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import PageHeader from '../../components/PageHeader';
-import TeacherItem from '../../components/TeacherItem';
+import TeacherItem, { Teacher } from '../../components/TeacherItem';
 
 
 import styles from './styles';
+import api from '../../services/api';
+import { useFocusEffect } from '@react-navigation/native';
 
 function TeacherList() {
 
   const [isFiltersVisible, setIsFiltersVisible] = useState(false);
+  const [favorites, setFavorites] = useState<number[]>([]);
+  const [teachers, setTeachers] = useState([]);
+  const [subject, setSubject] = useState('');
+  const [week_day, setWeekDay] = useState('');
+  const [time, setTime] = useState('');
 
   function handleToggleFiltersVisible() {
     setIsFiltersVisible(!isFiltersVisible);
   }
+
+  async function handleFiltersSubmit() {
+    loadFavorites();
+
+    const response = await api.get('classes', {
+      params: { subject, week_day, time }
+    });
+
+    setIsFiltersVisible(false);
+    setTeachers(response.data);
+  }
+
+  function loadFavorites() {
+    AsyncStorage.getItem('favorites').then(response => {
+      if(response) {
+        const favoritedTeachers = JSON.parse(response)
+        const favoritedTeachersId = favoritedTeachers.map((teacher: Teacher) => {
+          return teacher.id;
+        })
+        setFavorites(favoritedTeachersId);
+      }
+    })
+  }
+
+  useFocusEffect(() => {
+    loadFavorites();
+  });
+
+//----------------------------------------------------------------------------------------------------------//
 
   return (
     <View style={styles.container}>
@@ -28,21 +65,24 @@ function TeacherList() {
         {isFiltersVisible && (
           <View style={styles.searchForm}>
             <Text style={styles.label}>Matérias</Text>
-            <TextInput style={styles.input} placeholder="Qual a Matéria?" placeholderTextColor='#c1bccc' />
+            <TextInput style={styles.input} placeholder="Qual a Matéria?" placeholderTextColor='#c1bccc'
+              value={subject} onChangeText={text => setSubject(text)} />
 
             <View style={styles.inputGroup}>
               <View style={styles.inputBlock}>
                 <Text style={styles.label}>Dia da Semana</Text>
-                <TextInput style={styles.input} placeholder="Qual o dia?" placeholderTextColor='#c1bccc' />
+                <TextInput style={styles.input} placeholder="Qual o dia?" placeholderTextColor='#c1bccc'
+                  value={week_day} onChangeText={text => setWeekDay(text)} />
               </View>
 
               <View style={styles.inputBlock}>
                 <Text style={styles.label}>Horário</Text>
-                <TextInput style={styles.input} placeholder="Qual horário?" placeholderTextColor='#c1bccc' />
+                <TextInput style={styles.input} placeholder="Qual horário?" placeholderTextColor='#c1bccc'
+                  value={time} onChangeText={text => setTime(text)} />
               </View>
             </View>
 
-            <RectButton style={styles.submitButton}>
+            <RectButton onPress={handleFiltersSubmit} style={styles.submitButton}>
               <Text style={styles.submitButtonText}>Filtrar</Text>
             </RectButton>
           </View>
@@ -54,10 +94,12 @@ function TeacherList() {
           paddingHorizontal: 16,
           paddingBottom: 16,
         }}>
-        <TeacherItem />
-        <TeacherItem />
-        <TeacherItem />
-        <TeacherItem />
+
+        {teachers.map((teacher: Teacher) => {
+          return (
+          <TeacherItem key={teacher.id} teacher={teacher} favorited={favorites.includes(teacher.id)} />
+          )
+        })}
       </ScrollView>
     </View>
   );
