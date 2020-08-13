@@ -4,9 +4,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
 import PageHeader from '../../components/PageHeader';
+import TeacherItem, { Teacher } from '../../components/TeacherItem';
 
 import styles from './styles';
-import TeacherItem, { Teacher } from '../../components/TeacherItem';
+
 
 function Favorites() {
   const [favorites, setFavorites] = useState([]);
@@ -15,10 +16,11 @@ function Favorites() {
 
     AsyncStorage.getItem('favorites').then(response => {
       if(response) {
-        const favoritedTeachers = JSON.parse(response);
+        const favoritedTeachers = JSON.parse(response)
+
         setFavorites(favoritedTeachers);
       }
-    })
+    });
   }
 
   useFocusEffect(() => {
@@ -44,6 +46,6 @@ function Favorites() {
 
     </View>
   );
-}
+};
 
 export default Favorites;

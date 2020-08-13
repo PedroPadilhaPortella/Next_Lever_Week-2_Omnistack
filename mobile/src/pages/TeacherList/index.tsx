@@ -7,10 +7,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import PageHeader from '../../components/PageHeader';
 import TeacherItem, { Teacher } from '../../components/TeacherItem';
 
-
-import styles from './styles';
 import api from '../../services/api';
-import { useFocusEffect } from '@react-navigation/native';
+import styles from './styles';
+
 
 function TeacherList() {
 
@@ -21,21 +20,6 @@ function TeacherList() {
   const [week_day, setWeekDay] = useState('');
   const [time, setTime] = useState('');
 
-  function handleToggleFiltersVisible() {
-    setIsFiltersVisible(!isFiltersVisible);
-  }
-
-  async function handleFiltersSubmit() {
-    loadFavorites();
-
-    const response = await api.get('classes', {
-      params: { subject, week_day, time }
-    });
-
-    setIsFiltersVisible(false);
-    setTeachers(response.data);
-  }
-
   function loadFavorites() {
     AsyncStorage.getItem('favorites').then(response => {
       if(response) {
@@ -45,12 +29,30 @@ function TeacherList() {
         })
         setFavorites(favoritedTeachersId);
       }
-    })
+    });
   }
 
-  useFocusEffect(() => {
+  function handleToggleFiltersVisible() {
+    setIsFiltersVisible(!isFiltersVisible);
+  }
+
+  async function handleFiltersSubmit() {
+    console.log({subject, week_day, time})
     loadFavorites();
-  });
+
+    const response = await api.get('classes', {
+      params: { 
+        subject,
+        week_day,
+        time
+      }
+    });
+
+    setIsFiltersVisible(false);
+    setTeachers(response.data);
+    console.log({subject, week_day, time})
+  }
+
 
 //----------------------------------------------------------------------------------------------------------//
 
