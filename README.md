@@ -65,9 +65,9 @@ Esse projeto foi feito utilizando as seguintes tecnologias:
 * App para conectar estudantes e professores.
 
 
-# :closed_book: Licencia
+# :closed_book: Licença
 
-Lançado em 2020 :closed_book: Licencia
+Lançado em 2020 :closed_book:
 
 Made with love by [Pedro Portella](https://github.com/PedroPadilhaPortella) 🚀.
 Esse projeto esta sobre [MIT license](./LICENSE).
